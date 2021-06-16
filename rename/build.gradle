@@ -1,0 +1,23 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+// 打包可执行jar
+task makeJar(type: Jar) {
+    delete '../可执行文件/重命名.jar'
+    manifest {
+        attributes 'Main-Class': 'DrawRename'
+    }
+    destinationDir = file('../可执行文件')
+    archiveName = '重命名.jar'
+    from zipTree(file('build/libs/rename.jar'))
+    //过滤不需要的class
+//    exclude "**/**/BuildConfig.class"
+//    exclude "**/**/BuildConfig\$*.class"
+}
+makeJar.dependsOn(build)
